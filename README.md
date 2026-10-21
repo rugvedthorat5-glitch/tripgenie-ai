@@ -1,94 +1,155 @@
-# TripGenie AI — Frontend (Expo SDK 57)
+# 🧭 TripGenie AI — Intelligent Personalized Travel Companion
 
-AI-Based Personalized Travel Recommendation & Smart Trip Planner.
-React Native + Expo Router + TypeScript + Context API + Axios.
+> **College Mega-Project**  
+> **Student & Project Lead:** Shraddha Pethkar  
+> **Developer & Pair:** Nitin Gaikwad  
+> **Stack:** React Native (Expo SDK 52+) • TypeScript • Node.js Express • MongoDB Atlas • Google Gemini AI • Hostinger Cloud
 
-## Features
+---
 
-| Area | What it does |
-|---|---|
-| Auth | Login, Register, Forgot password, token stored in AsyncStorage |
-| Home | Greeting, quick actions, notification bell, personalised recommendations, favourites, latest plan |
-| Explore | Search + interest filter |
-| Destination | Details, highlights, best season, cost/day, favourite (heart), reviews and ratings, links to weather and map |
-| AI Trip Planner | Destination, days, travellers, budget, style, interests, generates a full itinerary |
-| Itinerary | Day-by-day plan, budget breakdown, tips, packing checklist, save, share, delete |
-| My Trips | All plans, saved plans, favourite places |
-| AI Chatbot | Chat UI with suggestion chips |
-| Budget planner | Per-day estimate and suggested split |
-| Weather | Live 6-day forecast per destination (free Open-Meteo, no API key) |
-| Maps | India locator with pins, plus Google Maps links for place, directions and nearby restaurants, hotels, ATMs, hospitals |
-| Notifications | In-app notification centre with unread badge |
-| Profile | Profile photo, stats, preferences, backend connection test, logout |
-| Admin panel | Catalog stats, add or remove destinations, backend test. Visible when the login email starts with `admin` (for example admin@test.com) or the backend returns `role: "admin"` |
+## 🚀 Live Production Cloud Deployment
 
-**Demo mode:** if the backend is not reachable, login/register, the AI planner and the chatbot
-fall back to local logic so every screen can be tested. When the backend is running, the same
-screens call it automatically.
+The backend and database are **fully deployed live** on Hostinger cloud infrastructure with automatic scaling and zero local configuration needed:
 
-## Run (Windows, one time)
+- **Live Cloud API Base:** `https://blanchedalmond-wildcat-125853.hostingersite.com/api`
+- **Health Check Endpoint:** `https://blanchedalmond-wildcat-125853.hostingersite.com/api/health`
+- **Database:** MongoDB Atlas (Production Cluster with 50+ curated destinations seeded)
+- **AI Engine:** Google Gemini 2.5 Flash
+
+---
+
+## 🔑 Login Credentials (For Testing & Evaluation)
+
+You can log in immediately using either account:
+
+### 1. Traveller Account (General User)
+- **Email:** `demo@tripgenie.com`
+- **Password:** `Demo@12345`
+- **Features:** AI Trip Architect, Smart Budget Planner, 6-Day Weather, 50+ Destination Catalog, Saved Trips, PDF Itinerary Export, Ask Atlas Chatbot.
+
+### 2. Admin Account (Shraddha Pethkar)
+- **Email:** `admin@tripgenie.com`
+- **Password:** `Admin@12345`
+- **Features:** Full access to **Admin Console** (Segmented Dashboard, Live Cloud Telemetry, Add New Destination, Edit/Hide/Delete Catalog entries, System Metrics).
+
+---
+
+## 📂 Repository Structure
+
+The project is structured as a clean full-stack monorepo:
 
 ```
-cd /d E:\travel-ai-frontend
+TripGenie/
+├── frontend/                   # React Native & Expo Mobile/Web App
+│   ├── app/                    # Expo Router screens (Tabs, Auth, Details)
+│   │   ├── (auth)/             # Login, Register, Forgot Password
+│   │   ├── (tabs)/             # Home, Explore, AI Plan, Trips, Profile
+│   │   ├── admin.tsx           # Admin Management Console (iOS Segmented Control)
+│   │   ├── chat.tsx            # Atlas AI Assistant
+│   │   ├── budget.tsx          # Smart Budget Planner
+│   │   ├── weather.tsx         # Real-time Weather
+│   │   └── map.tsx             # Interactive Indian Map
+│   ├── assets/                 # App icons, splash screens, hero banners
+│   ├── src/                    # Shared components, contexts, theme, services
+│   │   ├── components/         # Reusable UI widgets, cards, headers
+│   │   ├── context/            # Auth, Destinations, Trips, Extras contexts
+│   │   ├── services/           # Axios API client, AI planner, Weather
+│   │   └── theme.ts            # Design tokens & color system
+│   ├── android/                # Native Android build configuration
+│   ├── app.json                # Expo project configuration
+│   ├── package.json            # Frontend dependencies
+│   └── tsconfig.json           # TypeScript configuration
+│
+├── backend/                    # Node.js + Express REST API Server
+│   ├── src/                    # Backend architecture
+│   │   ├── controllers/        # Auth, Destinations, Trips, Chat, Admin
+│   │   ├── models/             # Mongoose schemas (User, Trip, Destination)
+│   │   ├── routes/             # Express API endpoints
+│   │   ├── middleware/         # JWT authentication & admin role guard
+│   │   ├── services/           # Google Gemini AI client
+│   │   └── scripts/            # Database seed script (50 Indian destinations)
+│   ├── package.json            # Backend dependencies
+│   └── .env.example            # Backend environment template
+│
+├── docs/                       # Guides and API documentation
+│   ├── APIS.md                 # Complete API checklist & endpoints
+│   └── MOBILE_GUIDE.md         # Android phone testing and installation guide
+│
+├── .gitignore                  # Clean repository ignore list
+├── package.json                # Root package.json with workspace runner scripts
+├── start.sh                    # One-click startup script for macOS / Linux
+├── run_windows.bat             # One-click startup script for Windows
+└── README.md                   # This documentation
+```
+
+---
+
+## ⚡ Quick Start Guide (For Friends & Reviewers)
+
+### Prerequisites
+- [Node.js](https://nodejs.org) (v18 or higher recommended)
+- [Git](https://git-scm.com)
+- *(Optional for mobile testing)* [Expo Go app](https://expo.dev/go) or Android USB connection
+
+---
+
+### Option A: Run Using Root Scripts (Easiest)
+
+From the project root:
+
+```bash
+# 1. Install dependencies for both frontend and backend in one go:
+npm run install:all
+
+# 2. Run the frontend mobile / web app:
+npm run frontend
+
+# 3. (Optional) Run local backend if you want to test local MongoDB:
+npm run backend
+```
+
+---
+
+### Option B: Run Frontend Individually
+
+The frontend connects directly to the **live Hostinger cloud backend** by default, so you do **not** even need to run a local backend or database!
+
+```bash
+cd frontend
 npm install
-copy .env.example .env
+npx expo start
 ```
 
-## Run in the browser (easiest)
+- Press `w` to open the web version in your browser.
+- Press `a` to run on a connected Android phone or emulator.
+- Scan the displayed QR code with your phone using **Expo Go**.
 
-```
-npx expo start --web
-```
+---
 
-Open http://localhost:8081
+### Option C: Run Backend Individually (For Local Development)
 
-## Run on your phone
-
-Expo Go on your phone supports SDK 54 only, so it cannot open an SDK 57 project.
-Build an installable APK with EAS instead:
-
-```
-npm install -g eas-cli
-eas login
-eas build --platform android --profile preview
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm run seed       # Seeds destinations and admin user
+npm run dev        # Starts backend on http://localhost:5050
 ```
 
-Download the APK from the link EAS prints and install it on the phone.
+---
 
-## Connecting the backend
+## 📱 Features Delivered
 
-Set `EXPO_PUBLIC_API_URL` in `.env` and restart Expo. Use Profile > "Test backend connection"
-to check it. The app calls these routes (change `src/services/api.ts` and
-`src/services/planner.ts` if your backend differs):
+1. **Authentication:** JWT sessions, secure password hashing, auto-login persistence, role-based admin check.
+2. **iOS-Style Animated Navigation:** Smooth spring-physics tab transitions, active teal micro-dots, unclipped icons.
+3. **Admin Console:** Segmented controls (Dashboard Metrics, Catalog Search & Management, Add/Edit Destinations).
+4. **Atlas AI Assistant:** Powered by Google Gemini 2.5 Flash for conversational travel advice and packing suggestions.
+5. **Smart Budget Planner:** Destination-based cost estimates broken down by accommodation, food, transport, and activities.
+6. **AI Trip Planner:** Dynamic itinerary generation with day-by-day plans, maps, and PDF export.
+7. **Curated Indian Destinations:** 50 hand-crafted destinations across beaches, mountains, heritage, nature, spiritual, and adventure.
 
-| Method | Route | Used for |
-|---|---|---|
-| GET | /health | optional, connection test |
-| POST | /auth/register, /auth/login | return `{ token, user }` |
-| POST | /auth/forgot-password | password reset email |
-| PUT | /users/preferences | save preferences |
-| POST | /ai/plan | returns `{ trip }` with `itinerary`, `breakdown`, `tips` |
-| POST | /ai/chat | returns `{ reply }` |
-| POST / DELETE | /trips, /trips/:id | save and delete trips |
+---
 
-Favourites, reviews, notifications, packing lists, custom destinations and the profile photo are
-stored on the device (AsyncStorage). Moving them to the backend is the natural next step.
-
-## Project structure
-
-```
-app/            Expo Router screens ((auth), (tabs), destination, itinerary, chat, budget,
-                preferences, weather, map, notifications, admin)
-src/components  Reusable UI (Button, Input, Chip, Card, DestinationCard)
-src/context     Auth, Trips, Destinations, Extras (favourites, reviews, notifications, checklist)
-src/services    api.ts (Axios), planner.ts (AI calls + local fallback), weather.ts, health.ts
-src/data        Destination catalog
-src/utils       roles.ts
-```
-
-## Notes
-
-- Map screen is a lightweight locator with deep links to Google Maps. A full in-app map
-  (react-native-maps) needs a Google Maps API key and a development build.
-- Push notifications (FCM) are not included; notifications are in-app only.
-- Destination images are emoji and gradients. Real photos can come from the backend later.
+## 👥 Contributors & Credits
+- **Shraddha Pethkar** — Project Architecture, Research & Administration
+- **Nitin Gaikwad** — Engineering & Full-Stack Development
